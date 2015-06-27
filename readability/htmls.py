@@ -9,7 +9,7 @@ from .encoding import get_encoding
 utf8_parser = lxml.html.HTMLParser(encoding='utf-8')
 
 def build_doc(page):
-    if isinstance(page, unicode):
+    if isinstance(page, str):
         enc = None
         page_unicode = page
     else:
@@ -24,16 +24,16 @@ def js_re(src, pattern, flags, repl):
 
 def normalize_entities(cur_title):
     entities = {
-        u'\u2014':'-',
-        u'\u2013':'-',
-        u'&mdash;': '-',
-        u'&ndash;': '-',
-        u'\u00A0': ' ',
-        u'\u00AB': '"',
-        u'\u00BB': '"',
-        u'&quot;': '"',
+        '\u2014':'-',
+        '\u2013':'-',
+        '&mdash;': '-',
+        '&ndash;': '-',
+        '\u00A0': ' ',
+        '\u00AB': '"',
+        '\u00BB': '"',
+        '&quot;': '"',
     }
-    for c, r in entities.iteritems():
+    for c, r in entities.items():
         if c in cur_title:
             cur_title = cur_title.replace(c, r)
 
@@ -105,7 +105,7 @@ def shorten_title(doc):
 
 def get_body(doc):
     [ elem.drop_tree() for elem in doc.xpath('.//script | .//link | .//style') ]
-    raw_html = unicode(tostring(doc.body or doc))
+    raw_html = str(tostring(doc.body or doc))
     cleaned = clean_attributes(raw_html)
     try:
         #BeautifulSoup(cleaned) #FIXME do we really need to try loading it?

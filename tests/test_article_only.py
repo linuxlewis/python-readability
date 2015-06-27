@@ -9,7 +9,8 @@ SAMPLES = os.path.join(os.path.dirname(__file__), 'samples')
 
 def load_sample(filename):
     """Helper to get the content out of the sample files"""
-    return open(os.path.join(SAMPLES, filename)).read()
+    with open(os.path.join(SAMPLES, filename)) as f:
+        return f.read()
 
 
 class TestArticleOnly(unittest.TestCase):
